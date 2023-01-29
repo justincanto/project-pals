@@ -15,7 +15,7 @@ const STATUS = ["DRAFT", "IN_PROGRESS", "FINISHED"] as const;
 
 export const projectRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.project.findMany();
+    return ctx.prisma.project.findMany({ include: { creator: true } });
   }),
   getById: protectedProcedure
     .input(z.object({ projectId: z.string() }))
@@ -31,7 +31,7 @@ export const projectRouter = createTRPCRouter({
         status: z.enum(STATUS),
       })
     )
-    .query(({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       return ctx.prisma.project.create({
         data: {
           creatorId: ctx.session.user.id,
@@ -40,6 +40,51 @@ export const projectRouter = createTRPCRouter({
           description: input.description,
           joinedBy: { connect: [{ id: ctx.session.user.id }] },
           status: input.status,
+        },
+      });
+    }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        neededRoles: z.array(z.enum(ROLES)).optional(),
+        status: z.enum(STATUS).optional(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.project.update({
+        where: { id: input.projectId },
+        data: {
+          title: input.title || undefined,
+          neededRoles: input.neededRoles || undefined,
+          description: input.description || undefined,
+          status: input.status || undefined,
+        },
+      });
+    }),
+  interstedIn: protectedProcedure
+    .input(z.object({ projectid: z.string() }))
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.project.update({
+        where: { id: input.projectid },
+        data: {
+          interestedUsers: {
+            connect: [{ id: ctx.session.user.id }],
+          },
+        },
+      });
+    }),
+  join: protectedProcedure
+    .input(z.object({ projectid: z.string() }))
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.project.update({
+        where: { id: input.projectid },
+        data: {
+          joinedBy: {
+            connect: [{ id: ctx.session.user.id }],
+          },
         },
       });
     }),

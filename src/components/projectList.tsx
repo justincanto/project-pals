@@ -1,13 +1,34 @@
 import { api } from "../utils/api";
+import { ProjectCard } from "./projectCard";
 
 export const ProjectList = () => {
   const projects = api.project.getAll.useQuery();
 
   return (
-    <div className="mt-4 text-white">
-      <h3 className="text-2xl font-bold">Open Projects</h3>
+    <div className="flex flex-wrap justify-center gap-6">
       {projects.data?.map((project) => (
-        <div key={project.id}>{project.title}</div>
+        <ProjectCard
+          key={project.id}
+          creator={project.creator.name}
+          title={project.title}
+          description={project.description}
+        />
+      ))}
+      {projects.data?.map((project) => (
+        <ProjectCard
+          key={project.id}
+          creator={project.creator.name}
+          title={project.title}
+          description={project.description}
+        />
+      ))}
+      {projects.data?.map((project) => (
+        <ProjectCard
+          key={project.id}
+          creator={project.creator.name}
+          title={project.title}
+          description={project.description}
+        />
       ))}
     </div>
   );
