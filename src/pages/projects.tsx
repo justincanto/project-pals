@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 
-import { ProjectList } from "../components/projectList";
+import { ProjectsList } from "../components/projectsList";
 import { Layout } from "../layouts/default";
 
 const Projects: NextPage = () => {
@@ -17,7 +17,7 @@ const Projects: NextPage = () => {
           Projects
         </h1>
         <div className="flex flex-col items-center gap-2">
-          <ProjectList />
+          <ProjectsList />
         </div>
       </div>
     </Layout>

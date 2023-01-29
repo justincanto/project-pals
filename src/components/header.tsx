@@ -44,7 +44,16 @@ export const Header = () => {
             New Project
           </Link>
           {session.data ? (
-            <Link href="/account">Account</Link>
+            <Link
+              href="/account"
+              className={`hover:text-purple-600 hover:text-opacity-70 ${
+                router.pathname == "/create-project"
+                  ? "text-purple-600 text-opacity-70"
+                  : ""
+              }`}
+            >
+              Account
+            </Link>
           ) : (
             <Link href="/login" className="font-normal">
               <Button content="Login"></Button>

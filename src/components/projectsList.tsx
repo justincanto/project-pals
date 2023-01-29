@@ -1,7 +1,7 @@
 import { api } from "../utils/api";
 import { ProjectCard } from "./projectCard";
 
-export const ProjectList = () => {
+export const ProjectsList = () => {
   const projects = api.project.getAll.useQuery();
 
   return (
