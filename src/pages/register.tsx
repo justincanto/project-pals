@@ -1,22 +1,58 @@
+import { useRouter } from "next/router";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "../components/button";
+import { api } from "../utils/api";
+
+interface IFormInput {
+  name: string;
+  description: string;
+  role: "DEV_FRONT" | "UI_DESIGNER";
+}
 
 const NewUser = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log("submit");
+  const { register, handleSubmit } = useForm<IFormInput>();
+  const updateMeMutation = api.user.updateMe.useMutation();
+  const router = useRouter();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    updateMeMutation.mutate(data, {
+      onSuccess: async () => {
+        await router.push("/");
+      },
+    });
   };
+
   return (
     <>
       <main className="flex min-h-screen items-center justify-center">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           action=""
           className="w-full max-w-xl space-y-6 rounded-lg bg-purple-600 bg-opacity-10 p-8"
         >
-          <Input label="Name" />
+          <label htmlFor="name" className="block">
+            Name
+            <input id="name" {...register("name")} className="block" />
+          </label>
+          <label htmlFor="description" className="block">
+            Description
+            <textarea
+              rows={5}
+              cols={55}
+              id="description"
+              {...register("description")}
+              className="block"
+            />
+          </label>
+          <label htmlFor="role" className="block">
+            Role
+            <select id="role" {...register("role")} className="block">
+              <option value="DEV_FRONT">Developer</option>
+              <option value="UI_DESIGNER">UI Designer</option>
+            </select>
+          </label>
+          {/* <Input label="Name" />
           <TextArea label="Description" />
-          <Select label="Role" options={["Developer", "Designer"]} />
+          <Select label="Role" options={["Developer", "Designer"]} /> */}
           <button type="submit">
             <Button content="Submit" />
           </button>

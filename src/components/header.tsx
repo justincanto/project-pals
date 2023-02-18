@@ -12,7 +12,7 @@ export const Header = () => {
         Project<span className="text-purple-600 text-opacity-70">Pals</span>
       </Link>
       <div className="flex items-center gap-12 text-lg font-bold">
-        <nav className="space-x-12">
+        <nav className="flex items-center gap-x-12">
           <Link
             href="/projects"
             className={`hover:text-purple-600 hover:text-opacity-70 ${

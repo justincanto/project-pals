@@ -1,16 +1,13 @@
 import Image from "next/image";
 
-export const PalCard = ({
-  name,
-  description,
-  role,
-  image,
-}: {
+type PalCardProps = {
   name: string | null;
   description: string | null;
   role: string | null;
   image: string | null;
-}) => {
+};
+
+export const PalCard = ({ name, description, role, image }: PalCardProps) => {
   return (
     <div className="relative flex w-96 flex-col gap-2 rounded-lg bg-purple-600 bg-opacity-[.15] p-4 leading-snug text-gray-800">
       <div className="flex items-center justify-start gap-4">
