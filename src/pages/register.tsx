@@ -31,7 +31,11 @@ const NewUser = () => {
         >
           <label htmlFor="name" className="block">
             Name
-            <input id="name" {...register("name")} className="block" />
+            <input
+              id="name"
+              {...(register("name"), { required: true })}
+              className="block"
+            />
           </label>
           <label htmlFor="description" className="block">
             Description
@@ -39,13 +43,17 @@ const NewUser = () => {
               rows={5}
               cols={55}
               id="description"
-              {...register("description")}
+              {...(register("description"), { required: true })}
               className="block"
             />
           </label>
           <label htmlFor="role" className="block">
             Role
-            <select id="role" {...register("role")} className="block">
+            <select
+              id="role"
+              {...(register("role"), { required: true })}
+              className="block"
+            >
               <option value="DEV_FRONT">Developer</option>
               <option value="UI_DESIGNER">UI Designer</option>
             </select>
