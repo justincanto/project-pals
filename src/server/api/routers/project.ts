@@ -28,7 +28,6 @@ export const projectRouter = createTRPCRouter({
         title: z.string(),
         description: z.string(),
         neededRoles: z.array(z.enum(ROLES)),
-        status: z.enum(STATUS),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -39,7 +38,7 @@ export const projectRouter = createTRPCRouter({
           neededRoles: input.neededRoles,
           description: input.description,
           joinedBy: { connect: [{ id: ctx.session.user.id }] },
-          status: input.status,
+          status: STATUS[0],
         },
       });
     }),
