@@ -49,7 +49,10 @@ const Login = () => {
             <label htmlFor="devFront" className="block">
               Developer
               <input
-                {...register("neededRoles")}
+                {...register("neededRoles", {
+                  validate: (v: Array<"DEV_FRONT" | "UI_DESIGNER">) =>
+                    v.length > 0,
+                })}
                 id="devFront"
                 type="checkbox"
                 value="DEV_FRONT"
@@ -58,7 +61,10 @@ const Login = () => {
             <label htmlFor="uiDesigner" className="block">
               UI Designer
               <input
-                {...register("neededRoles")}
+                {...register("neededRoles", {
+                  validate: (v: Array<"DEV_FRONT" | "UI_DESIGNER">) =>
+                    v.length > 0,
+                })}
                 id="uiDesigner"
                 type="checkbox"
                 value="UI_DESIGNER"
