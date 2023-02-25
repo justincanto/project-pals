@@ -6,11 +6,9 @@ export const Layout = ({
   children: React.ReactElement | React.ReactElement[];
 }) => {
   return (
-    <div>
+    <div className="flex min-h-screen flex-col bg-gray-50">
       <Header />
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
-        {children}
-      </main>
+      <main className="flex flex-col items-center">{children}</main>
     </div>
   );
 };
