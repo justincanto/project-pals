@@ -3,6 +3,8 @@ import { Layout } from "../layouts/default";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { api } from "../utils/api";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface INewProjectFormInput {
   title: string;
@@ -11,6 +13,8 @@ interface INewProjectFormInput {
 }
 
 const Login = () => {
+  const session = useSession();
+
   const { register, handleSubmit } = useForm<INewProjectFormInput>();
   const updateMeMutation = api.project.create.useMutation();
   const router = useRouter();
@@ -21,6 +25,33 @@ const Login = () => {
       },
     });
   };
+  if (!session.data || !session.data?.user) {
+    return (
+      <Layout>
+        <div className="flex-1 pt-32">
+          <h2 className="mb-4 text-2xl font-bold">
+            You must be logged in to create a new project
+          </h2>
+          <div className="m-auto w-fit">
+            <Link
+              href="/login"
+              className="font-bold text-purple-600 text-opacity-70 hover:text-opacity-100"
+            >
+              {" "}
+              Login{" "}
+            </Link>
+            or go back to the{" "}
+            <Link
+              href="/"
+              className="font-bold text-purple-600 text-opacity-70 hover:text-opacity-100"
+            >
+              Home Page
+            </Link>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
   return (
     <Layout>
       <div className="flex-1 pt-32">
