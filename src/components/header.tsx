@@ -36,7 +36,7 @@ export const Header = () => {
           <Link
             href="/new-project"
             className={`hover:text-purple-600 hover:text-opacity-70 ${
-              router.pathname == "/create-project"
+              router.pathname == "/new-project"
                 ? "text-purple-600 text-opacity-70"
                 : ""
             }`}
@@ -47,7 +47,7 @@ export const Header = () => {
             <Link
               href="/account"
               className={`hover:text-purple-600 hover:text-opacity-70 ${
-                router.pathname == "/create-project"
+                router.pathname == "/account"
                   ? "text-purple-600 text-opacity-70"
                   : ""
               }`}

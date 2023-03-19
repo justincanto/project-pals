@@ -36,7 +36,7 @@ const Login = () => {
             <input
               id="title"
               {...register("title", { required: true })}
-              className="block w-full rounded-md border border-gray-900 border-opacity-25"
+              className="block w-full rounded-md border border-gray-900 border-opacity-25 py-1.5 px-2.5 font-normal"
             />
           </label>
           <label htmlFor="description" className="block font-semibold">
@@ -46,7 +46,7 @@ const Login = () => {
               cols={55}
               id="description"
               {...register("description", { required: true })}
-              className="block rounded-md border border-gray-900 border-opacity-25"
+              className="block rounded-md border border-gray-900 border-opacity-25 py-1.5 px-2.5 font-normal"
             />
           </label>
           <fieldset>
