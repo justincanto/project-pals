@@ -6,7 +6,7 @@ const Account = () => {
   const session = useSession();
   return (
     <Layout>
-      <main className="flex flex-col items-center gap-y-2">
+      <div className="flex flex-col items-center gap-y-2">
         {session.data && session.data.user ? (
           <div>
             Logged in as {session.data.user.name} using
@@ -16,7 +16,7 @@ const Account = () => {
         <button onClick={() => void signOut()}>
           <Button content="Logout" />
         </button>
-      </main>
+      </div>
     </Layout>
   );
 };

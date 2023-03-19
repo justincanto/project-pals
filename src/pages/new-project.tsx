@@ -23,7 +23,7 @@ const Login = () => {
   };
   return (
     <Layout>
-      <main>
+      <div>
         <h1 className="text-bold text-3xl">Fill your project informations</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="title" className="block">
@@ -75,7 +75,7 @@ const Login = () => {
             <Button content="Create project" />
           </button>
         </form>
-      </main>
+      </div>
     </Layout>
   );
 };
