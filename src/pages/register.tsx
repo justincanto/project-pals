@@ -32,7 +32,7 @@ const NewUser = () => {
           Name
           <input
             id="name"
-            {...(register("name"), { required: true })}
+            {...register("name", { required: true })}
             className="block"
           />
         </label>
@@ -42,7 +42,7 @@ const NewUser = () => {
             rows={5}
             cols={55}
             id="description"
-            {...(register("description"), { required: true })}
+            {...register("description", { required: true })}
             className="block"
           />
         </label>
@@ -50,7 +50,7 @@ const NewUser = () => {
           Role
           <select
             id="role"
-            {...(register("role"), { required: true })}
+            {...register("role", { required: true })}
             className="block"
           >
             <option value="DEV_FRONT">Developer</option>
