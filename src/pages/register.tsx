@@ -1,12 +1,18 @@
 import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "../components/button";
 import { api } from "../utils/api";
 
+const isValidUrl = (url: string) =>
+  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+    url
+  );
 interface IFormInput {
   name: string;
   description: string;
   role: "DEV_FRONT" | "UI_DESIGNER";
+  links?: string[];
 }
 
 const NewUser = () => {
@@ -14,11 +20,37 @@ const NewUser = () => {
   const updateMeMutation = api.user.updateMe.useMutation();
   const router = useRouter();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log("test");
+
     updateMeMutation.mutate(data, {
       onSuccess: async () => {
         await router.push("/");
       },
     });
+  };
+  const newLink = useRef<HTMLInputElement>(null);
+  const [links, setLinks] = useState<string[]>([]);
+  const addLinkIfEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      addLink(e);
+    }
+  };
+  const addLink = (
+    e:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    e.preventDefault();
+    if (
+      !newLink.current?.value ||
+      links.includes(newLink.current.value) ||
+      !isValidUrl(newLink.current.value)
+    ) {
+      return;
+    }
+    setLinks([...links, newLink.current.value]);
+    newLink.current.value = "";
+    newLink.current?.focus();
   };
 
   return (
@@ -57,9 +89,27 @@ const NewUser = () => {
             <option value="UI_DESIGNER">UI Designer</option>
           </select>
         </label>
-        {/* <Input label="Name" />
-          <TextArea label="Description" />
-          <Select label="Role" options={["Developer", "Designer"]} /> */}
+        <label htmlFor="links" className="block w-full">
+          Your links (Github, LinkedIn, Dribble, etc.)
+          <div className="flex">
+            <input
+              type="text"
+              ref={newLink}
+              placeholder="https://github.com/username"
+              className="w-full"
+              onKeyDown={(e) => addLinkIfEnter(e)}
+            />
+            <button
+              onClick={(e) => addLink(e)}
+              className="cursor-pointer bg-purple-600 bg-opacity-50 px-2"
+            >
+              Add
+            </button>
+          </div>
+          {links.map((link) => (
+            <div key={link}>{link}</div>
+          ))}
+        </label>
         <button type="submit">
           <Button content="Submit" />
         </button>
