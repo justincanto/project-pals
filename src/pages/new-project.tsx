@@ -34,7 +34,7 @@ const Login = () => {
           </h2>
           <div className="m-auto w-fit">
             <Link
-              href="/login"
+              href="/account"
               className="font-bold text-purple-600 text-opacity-70 hover:text-opacity-100"
             >
               {" "}

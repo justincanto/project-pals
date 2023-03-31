@@ -55,7 +55,7 @@ export const Header = () => {
               Account
             </Link>
           ) : (
-            <Link href="/login" className="font-normal">
+            <Link href="/account" className="font-normal">
               <Button content="Login"></Button>
             </Link>
           )}
