@@ -66,6 +66,7 @@ model User {
     sessions             Session[]
     role                 Role?
     description          String?   @db.Text
+    links                String[]
     createdProjects      Project[] @relation("createdProjects")
     joinedProjects       Project[] @relation("joinedProjects")
     interestedByProjects Project[] @relation("interstedInProjects")

@@ -20,9 +20,9 @@ const NewUser = () => {
   const updateMeMutation = api.user.updateMe.useMutation();
   const router = useRouter();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log("test");
+    const userData = { ...data, links };
 
-    updateMeMutation.mutate(data, {
+    updateMeMutation.mutate(userData, {
       onSuccess: async () => {
         await router.push("/");
       },

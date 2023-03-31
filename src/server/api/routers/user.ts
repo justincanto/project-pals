@@ -29,6 +29,7 @@ export const userRouter = createTRPCRouter({
         role: z.enum(ROLES).optional(),
         description: z.string().optional(),
         name: z.string().optional(),
+        links: z.array(z.string()).default([]),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -38,6 +39,7 @@ export const userRouter = createTRPCRouter({
           role: input.role || undefined,
           description: input.description || undefined,
           name: input.name || undefined,
+          links: input.links,
         },
       });
     }),
