@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { DEFAULT_ROLE, ROLES } from "../utils/constants";
 import { getIcon } from "../utils/icons";
 
 type PalCardProps = {
@@ -14,7 +15,7 @@ type PalCardProps = {
 export const PalCard = ({ user }: PalCardProps) => {
   return (
     <div className="relative flex w-96 flex-col gap-2 rounded-lg bg-purple-600 bg-opacity-[.15] p-4 leading-snug text-gray-800">
-      <div className="flex items-center justify-start gap-4">
+      <div className="flex h-20 flex-col flex-wrap content-start justify-center gap-x-4">
         {user.image ? (
           <Image
             src={user.image}
@@ -24,11 +25,10 @@ export const PalCard = ({ user }: PalCardProps) => {
             className="rounded-full"
           />
         ) : null}
-        <p>
-          <span className="text-lg font-bold">{user.name}</span>
-          <br />
-          {user.role}
-        </p>
+        <div className="text-lg font-bold">{user.name}</div>
+        <div>
+          {user.role ? ROLES[user.role as keyof typeof ROLES] : DEFAULT_ROLE}
+        </div>
       </div>
       <p className="leading-tight">{user.description}</p>
       <div className="flex gap-x-2">
