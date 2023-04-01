@@ -5,11 +5,13 @@ import { api } from "../utils/api";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { Role } from "@prisma/client";
+import { ROLES } from "../utils/constants";
 
 interface INewProjectFormInput {
   title: string;
   description: string;
-  neededRoles: ("DEV_FRONT" | "UI_DESIGNER")[];
+  neededRoles: Role[];
 }
 
 const Login = () => {
@@ -82,32 +84,20 @@ const Login = () => {
           </label>
           <fieldset>
             <legend className="font-semibold">Needed roles</legend>
-            <label htmlFor="devFront" className="ml-4 block">
-              <input
-                {...register("neededRoles", {
-                  validate: (v: Array<"DEV_FRONT" | "UI_DESIGNER">) =>
-                    v.length > 0,
-                })}
-                id="devFront"
-                type="checkbox"
-                value="DEV_FRONT"
-                className="mr-2"
-              />
-              Developer
-            </label>
-            <label htmlFor="uiDesigner" className="ml-4 block">
-              <input
-                {...register("neededRoles", {
-                  validate: (v: Array<"DEV_FRONT" | "UI_DESIGNER">) =>
-                    v.length > 0,
-                })}
-                id="uiDesigner"
-                type="checkbox"
-                value="UI_DESIGNER"
-                className="mr-2"
-              />
-              UI Designer
-            </label>
+            {Object.keys(Role).map((role) => (
+              <label htmlFor={role} className="ml-4 block" key={role}>
+                <input
+                  {...register("neededRoles", {
+                    validate: (v: Array<Role>) => v.length > 0,
+                  })}
+                  id={role}
+                  type="checkbox"
+                  value={role}
+                  className="mr-2"
+                />
+                {ROLES[role as keyof typeof ROLES]}
+              </label>
+            ))}
           </fieldset>
           <button type="submit">
             <Button content="Create project" />
