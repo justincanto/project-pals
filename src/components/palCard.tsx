@@ -35,6 +35,7 @@ export const PalCard = ({ user }: PalCardProps) => {
         {user.links.map((link) => (
           <a href={link} key={link} target="_blank" rel="noreferrer">
             <Image
+              className="transition duration-300 ease-in-out hover:scale-110"
               src={`/icons/${getIcon(link)}.svg`}
               alt={getIcon(link) + " link"}
               width={20}
