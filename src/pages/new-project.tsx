@@ -7,20 +7,21 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Role } from "@prisma/client";
 import { ROLES } from "../utils/constants";
+import { FormInput } from "../components/form-input";
 
-interface INewProjectFormInput {
+type NewProjectFormInput = {
   title: string;
   description: string;
   neededRoles: Role[];
-}
+};
 
-const Login = () => {
+const NewProject = () => {
   const session = useSession();
 
-  const { register, handleSubmit } = useForm<INewProjectFormInput>();
+  const { register, handleSubmit } = useForm<NewProjectFormInput>();
   const updateMeMutation = api.project.create.useMutation();
   const router = useRouter();
-  const onSubmit: SubmitHandler<INewProjectFormInput> = (data) => {
+  const onSubmit: SubmitHandler<NewProjectFormInput> = (data) => {
     updateMeMutation.mutate(data, {
       onSuccess: async () => {
         await router.push("/projects");
@@ -64,14 +65,13 @@ const Login = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-y-5"
         >
-          <label htmlFor="title" className="block font-semibold">
-            Title
-            <input
-              id="title"
-              {...register("title", { required: true })}
-              className="block w-full rounded-md border border-gray-900 border-opacity-25 py-1.5 px-2.5 font-normal"
-            />
-          </label>
+          <FormInput
+            register={register}
+            label="Title"
+            name="title"
+            id="title"
+            rules={{ required: true }}
+          />
           <label htmlFor="description" className="block font-semibold">
             Description
             <textarea
@@ -108,4 +108,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default NewProject;
