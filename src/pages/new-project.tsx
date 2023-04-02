@@ -7,7 +7,8 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Role } from "@prisma/client";
 import { ROLES } from "../utils/constants";
-import { FormInput } from "../components/form-input";
+import { TextInput } from "../components/text-input";
+import { TextAreaInput } from "../components/text-area-input";
 
 type NewProjectFormInput = {
   title: string;
@@ -65,23 +66,20 @@ const NewProject = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-y-5"
         >
-          <FormInput
+          <TextInput
             register={register}
             label="Title"
             name="title"
             id="title"
             rules={{ required: true }}
           />
-          <label htmlFor="description" className="block font-semibold">
-            Description
-            <textarea
-              rows={5}
-              cols={55}
-              id="description"
-              {...register("description", { required: true })}
-              className="block rounded-md border border-gray-900 border-opacity-25 py-1.5 px-2.5 font-normal"
-            />
-          </label>
+          <TextAreaInput
+            register={register}
+            label="Description"
+            name="description"
+            id="description"
+            rules={{ required: true }}
+          />
           <fieldset>
             <legend className="font-semibold">Needed roles</legend>
             {Object.keys(Role).map((role) => (
