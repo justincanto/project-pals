@@ -5,6 +5,8 @@ import { Button } from "../components/button";
 import { api } from "../utils/api";
 import { TextInput } from "../components/text-input";
 import { TextAreaInput } from "../components/text-area-input";
+import { SelectInput } from "../components/select-input";
+import { ROLES } from "../utils/constants";
 
 const isValidUrl = (url: string) =>
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
@@ -77,17 +79,17 @@ const NewUser = () => {
           id="description"
           rules={{ required: true }}
         />
-        <label htmlFor="role" className="block">
-          Role
-          <select
-            id="role"
-            {...register("role", { required: true })}
-            className="block"
-          >
-            <option value="DEV_FRONT">Developer</option>
-            <option value="UI_DESIGNER">UI Designer</option>
-          </select>
-        </label>
+        <SelectInput
+          register={register}
+          label="Role"
+          name="role"
+          id="role"
+          items={Object.keys(ROLES).map((key) => ({
+            label: ROLES[key as keyof typeof ROLES],
+            value: key,
+          }))}
+          rules={{ required: true }}
+        />
         <label htmlFor="links" className="block w-full">
           Your links (Github, LinkedIn, Dribble, etc.)
           <div className="flex">
