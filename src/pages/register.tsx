@@ -3,17 +3,19 @@ import { useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "../components/button";
 import { api } from "../utils/api";
+import { TextInput } from "../components/text-input";
+import { TextAreaInput } from "../components/text-area-input";
 
 const isValidUrl = (url: string) =>
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
     url
   );
-interface IFormInput {
+type IFormInput = {
   name: string;
   description: string;
   role: "DEV_FRONT" | "UI_DESIGNER";
   links?: string[];
-}
+};
 
 const NewUser = () => {
   const { register, handleSubmit } = useForm<IFormInput>();
@@ -21,12 +23,13 @@ const NewUser = () => {
   const router = useRouter();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const userData = { ...data, links };
+    console.log(userData);
 
-    updateMeMutation.mutate(userData, {
-      onSuccess: async () => {
-        await router.push("/");
-      },
-    });
+    // updateMeMutation.mutate(userData, {
+    //   onSuccess: async () => {
+    //     await router.push("/");
+    //   },
+    // });
   };
   const newLink = useRef<HTMLInputElement>(null);
   const [links, setLinks] = useState<string[]>([]);
@@ -60,24 +63,20 @@ const NewUser = () => {
         action=""
         className="w-full max-w-xl space-y-6 rounded-lg bg-purple-600 bg-opacity-10 p-8"
       >
-        <label htmlFor="name" className="block">
-          Name
-          <input
-            id="name"
-            {...register("name", { required: true })}
-            className="block"
-          />
-        </label>
-        <label htmlFor="description" className="block">
-          Description
-          <textarea
-            rows={5}
-            cols={55}
-            id="description"
-            {...register("description", { required: true })}
-            className="block"
-          />
-        </label>
+        <TextInput
+          register={register}
+          label="Name"
+          name="name"
+          id="name"
+          rules={{ required: true }}
+        />
+        <TextAreaInput
+          register={register}
+          label="Description"
+          name="description"
+          id="description"
+          rules={{ required: true }}
+        />
         <label htmlFor="role" className="block">
           Role
           <select
