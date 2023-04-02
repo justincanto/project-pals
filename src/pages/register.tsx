@@ -7,6 +7,7 @@ import { TextInput } from "../components/text-input";
 import { TextAreaInput } from "../components/text-area-input";
 import { SelectInput } from "../components/select-input";
 import { ROLES } from "../utils/constants";
+import Image from "next/image";
 
 const isValidUrl = (url: string) =>
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
@@ -25,13 +26,12 @@ const NewUser = () => {
   const router = useRouter();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const userData = { ...data, links };
-    console.log(userData);
 
-    // updateMeMutation.mutate(userData, {
-    //   onSuccess: async () => {
-    //     await router.push("/");
-    //   },
-    // });
+    updateMeMutation.mutate(userData, {
+      onSuccess: async () => {
+        await router.push("/");
+      },
+    });
   };
   const newLink = useRef<HTMLInputElement>(null);
   const [links, setLinks] = useState<string[]>([]);
@@ -63,8 +63,9 @@ const NewUser = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
-        className="w-full max-w-xl space-y-6 rounded-lg bg-purple-600 bg-opacity-10 p-8"
+        className="w-full max-w-xl space-y-6 rounded-lg  bg-opacity-10 p-8"
       >
+        <h1 className="text-4xl font-bold">Registration</h1>
         <TextInput
           register={register}
           label="Name"
@@ -90,26 +91,44 @@ const NewUser = () => {
           }))}
           rules={{ required: true }}
         />
-        <label htmlFor="links" className="block w-full">
+        <label htmlFor="links" className="block font-semibold">
           Your links (Github, LinkedIn, Dribble, etc.)
-          <div className="flex">
+          <div className="mb-2 flex overflow-hidden rounded-md">
             <input
               type="text"
               ref={newLink}
               placeholder="https://github.com/username"
-              className="w-full"
+              className="block w-full rounded-md rounded-r-none border border-r-0 border-gray-900 border-opacity-25  py-1.5 px-2.5 font-normal"
               onKeyDown={(e) => addLinkIfEnter(e)}
             />
             <button
               onClick={(e) => addLink(e)}
-              className="cursor-pointer bg-purple-600 bg-opacity-50 px-2"
+              className="cursor-pointer bg-purple-600 bg-opacity-50 px-6 font-normal"
             >
               Add
             </button>
           </div>
-          {links.map((link) => (
-            <div key={link}>{link}</div>
-          ))}
+          <ul className="ml-4 font-normal">
+            {links.map((link) => (
+              <li key={link}>
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex hover:underline"
+                >
+                  <Image
+                    src="/icons/link.svg"
+                    width={20}
+                    height={20}
+                    alt=""
+                    className="mr-2"
+                  />
+                  {link}
+                </a>
+              </li>
+            ))}
+          </ul>
         </label>
         <button type="submit">
           <Button content="Submit" />
@@ -120,50 +139,3 @@ const NewUser = () => {
 };
 
 export default NewUser;
-
-const Input = ({ label }: { label: string }) => {
-  return (
-    <label htmlFor={label} className="block text-sm font-bold">
-      {label}
-      <input
-        type="text"
-        id={label}
-        name={label}
-        className="block rounded-lg border px-2 py-1 text-base font-normal shadow-sm"
-      />
-    </label>
-  );
-};
-const TextArea = ({ label }: { label: string }) => {
-  return (
-    <label htmlFor={label} className="block text-sm font-bold">
-      {label}
-      <textarea
-        name={label}
-        id={label}
-        className="block rounded-lg border px-2 py-1 text-base font-normal shadow-sm"
-        cols={50}
-        rows={5}
-      />
-    </label>
-  );
-};
-
-const Select = ({ label, options }: { label: string; options: string[] }) => {
-  return (
-    <label htmlFor={label} className="block text-sm font-bold">
-      {label}
-      <select
-        name={label}
-        id={label}
-        className="block rounded-lg px-2 py-1 text-base font-normal shadow-sm"
-      >
-        {options.map((opt) => (
-          <option value={opt} key={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-};
