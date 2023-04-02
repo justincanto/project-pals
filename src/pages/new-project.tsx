@@ -9,6 +9,7 @@ import { Role } from "@prisma/client";
 import { ROLES } from "../utils/constants";
 import { TextInput } from "../components/text-input";
 import { TextAreaInput } from "../components/text-area-input";
+import { CheckboxInput } from "../components/checkbox-input";
 
 type NewProjectFormInput = {
   title: string;
@@ -83,18 +84,17 @@ const NewProject = () => {
           <fieldset>
             <legend className="font-semibold">Needed roles</legend>
             {Object.keys(Role).map((role) => (
-              <label htmlFor={role} className="ml-4 block" key={role}>
-                <input
-                  {...register("neededRoles", {
-                    validate: (v: Array<Role>) => v.length > 0,
-                  })}
-                  id={role}
-                  type="checkbox"
-                  value={role}
-                  className="mr-2"
-                />
-                {ROLES[role as keyof typeof ROLES]}
-              </label>
+              <CheckboxInput
+                id={role}
+                name="neededRoles"
+                label={ROLES[role as keyof typeof ROLES]}
+                key={role}
+                register={register}
+                rules={{
+                  validate: (selectedRoles: Array<Role>) =>
+                    selectedRoles.length > 0,
+                }}
+              />
             ))}
           </fieldset>
           <button type="submit">
