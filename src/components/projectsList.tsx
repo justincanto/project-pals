@@ -14,22 +14,6 @@ export const ProjectsList = () => {
           description={project.description}
         />
       ))}
-      {projects.data?.map((project) => (
-        <ProjectCard
-          key={project.id}
-          creator={project.creator.name}
-          title={project.title}
-          description={project.description}
-        />
-      ))}
-      {projects.data?.map((project) => (
-        <ProjectCard
-          key={project.id}
-          creator={project.creator.name}
-          title={project.title}
-          description={project.description}
-        />
-      ))}
     </div>
   );
 };
