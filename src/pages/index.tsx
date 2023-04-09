@@ -16,10 +16,10 @@ const Home: NextPage = () => {
         <h1 className="text-5xl font-extrabold tracking-tight text-gray-800 sm:text-[5rem]">
           Project<span className="text-purple-600 text-opacity-70">Pals</span>
         </h1>
-        <div className="flex justify-center gap-x-5 text-3xl font-bold text-gray-800">
+        <div className="flex flex-col justify-center gap-5 text-3xl font-bold text-gray-800 md:flex-row">
           <Link
             href="/projects"
-            className="flex w-5/12 items-center gap-8 rounded-2xl bg-purple-600 bg-opacity-[.15] p-8 transition-colors hover:bg-opacity-25"
+            className="flex items-center gap-8 rounded-2xl bg-purple-600 bg-opacity-[.15] p-8 transition-colors hover:bg-opacity-25 md:w-5/12 md:flex-col lg:flex-row"
           >
             <Image
               src="idea-icon.svg"
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           </Link>
           <Link
             href="/pals"
-            className="flex w-5/12 items-center gap-8 rounded-2xl bg-purple-600 bg-opacity-[.15] p-8 transition-colors hover:bg-opacity-25"
+            className="flex items-center gap-8 rounded-2xl bg-purple-600 bg-opacity-[.15] p-8 transition-colors hover:bg-opacity-25 md:w-5/12 md:flex-col lg:flex-row"
           >
             <Image
               src="networking-icon.svg"
