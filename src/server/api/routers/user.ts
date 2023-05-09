@@ -23,6 +23,9 @@ export const userRouter = createTRPCRouter({
         include: { joinedProjects: true },
       });
     }),
+  me: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.user.findUnique({ where: { id: ctx.session.user.id } });
+  }),
   updateMe: protectedProcedure
     .input(
       z.object({

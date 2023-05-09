@@ -29,7 +29,7 @@ export const TextAreaInput = <TFormValues extends Record<string, unknown>>({
         cols={55}
         rows={5}
         {...(register && register(name, rules))}
-        className="block rounded-md border border-gray-900 border-opacity-25 py-1.5 px-2.5 font-normal"
+        className="block w-full rounded-md border border-gray-900 border-opacity-25 py-1.5 px-2.5 font-normal"
       />
     </label>
   );
